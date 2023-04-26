@@ -1,48 +1,38 @@
 package ie.tudublin;
 
-//The Follow class
-public class Follow {
-
-    //Variables of class
-    public String word;
-    public int count;
+public class Follow 
+{
+    private String word;
+    private int count;
 
     //constructor
-    public Follow(String word, int count)
-    {
+    public Follow(String word, int count) {
         this.word = word;
         this.count = count;
     }
 
-    //toString, called in DANI() to print to the terminal
-    public String toString()
-    {
-        return("Hello");
+    //getter word
+    public String getWord() {
+        return word;
     }
 
-    //Accesor methods
-
-    //word getter
-    public String getWord()
-    {
-        return(word);
+    //setter word
+    public void setWord(String word) {
+        this.word = word;
     }
 
-    //word setter
-    public String setWord()
-    {
-        return(word);
+    //getter count
+    public int getCount() {
+        return count;
     }
 
-    //count getter
-    public int getCount()
-    {
-        return(count);
+    //setter count
+    public void setCount(int count) {
+        this.count = count;
     }
-    
-    //count setter
-    public int setCount()
-    {
-        return(count);
+
+    //toString
+    public String toString() {
+        return word + "(" + count + ")";
     }
 }

@@ -39,15 +39,7 @@ public class DANI extends PApplet {
 
 	public void printModel()
 	{
-		for (int j = 0; j < Y.length; j++) 
-		{
-			System.out.println(Y[j] + "\n");
-			Word word = new Word();
-			word.word = Y[j];
-			Follow follow = new Follow();
-			word.follows.add();
-		}
-		
+	
 	}
 
 	public void setup() {
