@@ -41,11 +41,14 @@ public class Word
 
     //toString that itirates 
     @Override
-    public String toString() {
-        String x = "";
-        for (Follow follow : follows) {
-            x += follow.getWord() + "(" + follow.getCount() + ") ";
+    public String toString()
+    {
+        String result = "";
+        result += word + ":";
+        for(Follow f:follows)
+        {
+            result += " " + f.toString();
         }
-        return word + ": " + x;
+        return result;
     }
 }
