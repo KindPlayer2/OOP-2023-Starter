@@ -6,13 +6,14 @@ import processing.core.PApplet;
 
 public class DANI extends PApplet {
 
-	ArrayList<Word> test = new ArrayList<Word>();
+	ArrayList<Word> test;
 
 	String[] X;
 	String[] Y;
 
 	public void settings() {
 		size(1000, 1000);
+		new ArrayList<Word>();
 		//fullScreen(SPAN);
 	}
 
@@ -34,8 +35,50 @@ public class DANI extends PApplet {
 			{
 				Y[j] = Y[j].replaceAll("[^a-zA-Z ]", "");
 				Y[j] = Y[j].toLowerCase();
+				//check if there is a follow word
+                boolean lastWord;
+                if(j+1 == Y.length)
+                {
+                    lastWord = true;
+                }
+                else
+                {
+                    lastWord = false;
+                }
+
+                if(!lastWord)
+                {
+                    Y[j+1] = Y[j+1].replaceAll("[^a-zA-Z ]", "");
+                    Y[j+1] = Y[j+1].toLowerCase();
+                }
+
+                int result = findWord(Y[j]);
+                Word word;
+                //if word is not in model, add it
+                if(result == -1)
+                {
+                    word = new Word(Y[j]);
+                    test.add(word);
+                }
+                else
+                {
+                    word = test.get(result);
+                }
+
 			}
 		}
+	}
+
+	public int findWord(String word)
+	{
+		for(int i = 0; i < test.size(); i ++)
+		{
+			if(test.get(i).getWord().equals(word))
+			{
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	public void printModel()
