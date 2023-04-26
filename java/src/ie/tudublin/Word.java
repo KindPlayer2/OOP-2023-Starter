@@ -39,6 +39,23 @@ public class Word
         follows.add(follow);
     }
 
+    public void FollowCounter(Follow follow)
+    {
+        follow.setCount(follow.getCount()+1);
+    }
+
+    public int follower(String word)
+    {
+        for(Follow x:follows)
+        {
+            if(x.getWord().equals(word)){
+
+                return follows.indexOf(x);
+            }
+        }
+        return -1;
+    }
+
     //toString that itirates 
     @Override
     public String toString()

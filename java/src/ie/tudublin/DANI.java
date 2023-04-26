@@ -6,39 +6,34 @@ import processing.core.PApplet;
 
 public class DANI extends PApplet {
 
-	ArrayList<Word> test;
-	StringBuilder sb;
-
+	ArrayList<Word> test = new ArrayList<Word>();
+	String[] X;
+	String[] Y;
 	public void settings() {
 		size(1000, 1000);
 		//fullScreen(SPAN);
 	}
 
-    String[] sonnet;
-
 	public void setup() {
 		colorMode(HSB);
-		test = new ArrayList<Word>();
 		loadFile();
 		printModel();       
 	}
 
 	public void loadFile()
 {
-	String[] line = loadStrings("small.txt");
-	for(int i = 0; i < line.length; i ++)
+	X = loadStrings("small.txt");
+	for(int i = 0; i < X.length; i ++)
 	{
-		String[] words = split(line[i], " ");
-		for(int j = 0; j < words.length; j ++)
+		Y = split(X[i], " ");
+		for(int j = 0; j < Y.length; j ++)
 		{
-			//get a word from line and create a word object, add it to test
-			//then get the next word and create a follow object, add it to the arraylist of follows in the word object
-			words[j] = words[j].replaceAll("[^a-zA-Z ]", "");
-			words[j] = words[j].toLowerCase();
+			Y[j] = Y[j].replaceAll("[^a-zA-Z ]", "");
+			Y[j] = Y[j].toLowerCase();
 
 			//check if next word exist or not
 			boolean lastWord;
-			if(j+1 == words.length)
+			if(j+1 == Y.length)
 			{
 				lastWord = true;
 			}
@@ -49,16 +44,16 @@ public class DANI extends PApplet {
 			
 			if(!lastWord)
 			{
-				words[j+1] = words[j+1].replaceAll("[^a-zA-Z ]", "");
-				words[j+1] = words[j+1].toLowerCase();
+				Y[j+1] = Y[j+1].replaceAll("[^a-zA-Z ]", "");
+				Y[j+1] = Y[j+1].toLowerCase();
 			}
 
-			int result = findWord(words[j]);
+			int result = findWord(Y[j]);
 			Word word;
 			//if word is not in test, add it
 			if(result == -1)
 			{
-				word = new Word(words[j]);
+				word = new Word(Y[j]);
 				test.add(word);
 			}
 			else
@@ -66,7 +61,18 @@ public class DANI extends PApplet {
 				word = test.get(result);
 			}
 
-			
+				//check if follow for the word exist.
+				if(!lastWord)
+				{
+					if(word.follower(Y[j+1]) == -1)
+					{
+						word.addFollow(new Follow(Y[j+1], 1));
+					}
+					else
+					{
+						word.FollowCounter(word.getFollows().get(word.follower(Y[j+1])));
+					}
+				}
 		}
 	}
 }
