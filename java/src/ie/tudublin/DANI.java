@@ -6,6 +6,7 @@ import processing.core.PApplet;
 
 public class DANI extends PApplet {
 
+	//initialise arraylist and string arrays
 	ArrayList<Word> test = new ArrayList<Word>();
 	String[] X;
 	String[] Y;
@@ -14,6 +15,7 @@ public class DANI extends PApplet {
 		//fullScreen(SPAN);
 	}
 
+	//setup loads the file then prints the model
 	public void setup() {
 		colorMode(HSB);
 		loadFile();
@@ -21,55 +23,52 @@ public class DANI extends PApplet {
 	}
 
 	public void loadFile()
-{
-	X = loadStrings("small.txt");
-	for(int i = 0; i < X.length; i ++)
 	{
-		Y = split(X[i], " ");
-		for(int j = 0; j < Y.length; j ++)
+		//load small.txt file
+		X = loadStrings("small.txt");
+		for(int i = 0; i < X.length; i ++)
 		{
-			Y[j] = Y[j].replaceAll("[^a-zA-Z ]", "");
-			Y[j] = Y[j].toLowerCase();
+			//split the strings into single words
+			Y = split(X[i], " ");
 
-			//check if next word exist or not
-			boolean lastWord;
-			if(j+1 == Y.length)
+			//itirate through every word in word string array
+			for(int j = 0; j < Y.length; j ++)
 			{
-				lastWord = true;
-			}
-			else
-			{
-				lastWord = false;
-			}
-			
-			if(!lastWord)
-			{
-				Y[j+1] = Y[j+1].replaceAll("[^a-zA-Z ]", "");
-				Y[j+1] = Y[j+1].toLowerCase();
-			}
+				//firstly remove all punctuation from words
+				Y[j] = Y[j].replaceAll("[^a-zA-Z ]", "");
+				//change all to lower case
+				Y[j] = Y[j].toLowerCase();
 
-			int result = findWord(Y[j]);
-			Word word;
-			//if word is not in test, add it
-			if(result == -1)
-			{
-				word = new Word(Y[j]);
-				test.add(word);
-			}
-			else
-			{
-				word = test.get(result);
-			}
+				//see if there is a follower word
+				boolean ender;
+				if(j+1 == Y.length){
+					ender = true;
+				}
+				else{
+					ender = false;
+				}
+				if(!ender){
+					Y[j+1] = Y[j+1].replaceAll("[^a-zA-Z ]", "");
+					Y[j+1] = Y[j+1].toLowerCase();
+				}
 
-				//check if follow for the word exist.
-				if(!lastWord)
-				{
-					if(word.follower(Y[j+1]) == -1)
-					{
+				int result = findWord(Y[j]);
+				Word word;
+				//if word is not in test, add it
+				if(result == -1){
+					word = new Word(Y[j]);
+					test.add(word);
+				}
+				else{
+					word = test.get(result);
+				}
+
+				//check for follower
+				if(!ender){
+					if(word.follower(Y[j+1]) == -1){
 						word.addFollow(new Follow(Y[j+1], 1));
 					}
-					else
-					{
+					else{
 						word.FollowCounter(word.getFollows().get(word.follower(Y[j+1])));
 					}
 				}

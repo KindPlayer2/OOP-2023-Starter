@@ -35,15 +35,18 @@ public class Word
         this.follows = follows;
     }
 
+    //add to the follow array list
     public void addFollow(Follow follow) {
         follows.add(follow);
     }
 
+    //Adds to the followcounter used to print model
     public void FollowCounter(Follow follow)
     {
         follow.setCount(follow.getCount()+1);
     }
 
+    //returns the amount of times a given word follows another 
     public int follower(String word)
     {
         for(Follow x:follows)
